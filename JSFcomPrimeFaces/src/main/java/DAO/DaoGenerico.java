@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import posjavamavenhibernate.HibernateUtil;
+import hibernateUtil.HibernateUtil;
 
 public class DaoGenerico<E> {
 
@@ -36,7 +36,8 @@ public class DaoGenerico<E> {
 	}
 
 	public E pesquisar(Long id, Class<E> entidade) {
-		E e = (E) entityManager.find(entidade, id);
+		entityManager.clear();
+		E e = (E) entityManager.createQuery("from " + entidade.getSimpleName() + " where id = " + id).getSingleResult();
 		return e;
 
 	}
