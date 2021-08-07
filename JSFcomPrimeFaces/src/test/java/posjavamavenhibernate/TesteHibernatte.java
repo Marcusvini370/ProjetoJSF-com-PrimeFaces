@@ -20,7 +20,6 @@ public class TesteHibernatte {
 		pessoa.setNome("Paulo");
 		pessoa.setSenha("123");
 		pessoa.setSobrenome("Martins");
-		pessoa.setEmail("marcusvini370@gmail.com");
 
 		daoGenerico.salvar(pessoa);
 

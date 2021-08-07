@@ -20,7 +20,9 @@ import org.primefaces.model.chart.ChartSeries;
 
 import com.google.gson.Gson;
 
+import DAO.DaoEmail;
 import DAO.DaoUsuario;
+import model.EmailUser;
 import model.UsuarioPessoa;
 
 @ManagedBean(name = "usuarioPessoaManagedBean") 
@@ -31,6 +33,8 @@ public class UsuarioPessoaManagedBean {
 	private List<UsuarioPessoa> list = new ArrayList<UsuarioPessoa>();
 	private DaoUsuario<UsuarioPessoa> daoGeneric = new DaoUsuario<UsuarioPessoa>();
 	private BarChartModel barCharModel;
+	private EmailUser emailuser = new EmailUser();
+	private DaoEmail<EmailUser> daoEmail = new DaoEmail<EmailUser>();
 	
 	@PostConstruct
 	public void init() {
@@ -138,6 +142,35 @@ public class UsuarioPessoaManagedBean {
 		}
 		
 	}
-
 	
+	public void setEmailuser(EmailUser emailuser) {
+		this.emailuser = emailuser;
+	}
+	public EmailUser getEmailuser() {
+		return emailuser;
+	}
+	
+	public void addEmail() {
+		emailuser.setUsuarioPessoa(usuarioPessoa);
+		emailuser = daoEmail.updateMerge(emailuser);
+		usuarioPessoa.getEmails().add(emailuser);
+		emailuser = new EmailUser();
+		FacesContext.getCurrentInstance().addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Resultado:", "Salvo com sucesso!"));
+		
+	}
+	
+	public void removerEmail() throws Exception {
+	String codigoemail = FacesContext.getCurrentInstance().getExternalContext()
+			.getRequestParameterMap().get("codigoemail");
+	
+	EmailUser remover = new EmailUser();
+	remover.setId(Long.parseLong(codigoemail));
+	daoEmail.deletarPorId(remover);
+	usuarioPessoa.getEmails().remove(remover);
+	
+	FacesContext.getCurrentInstance().addMessage(null, 
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Resultado:", "Removido com sucesso!"));
+	
+	}
 }
