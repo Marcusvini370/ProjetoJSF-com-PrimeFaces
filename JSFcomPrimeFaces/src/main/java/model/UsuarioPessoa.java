@@ -34,6 +34,8 @@ public class UsuarioPessoa {
 	private String senha;
 	private String sexo;
 	private int idade;
+	private Double salario;
+	
 	
 	// mapeado com usuarioPessoa do telefoneUser que está fazendo o ManyToOne
 	// ele que vai trazer os telefones dos usuarios
@@ -49,6 +51,14 @@ public class UsuarioPessoa {
 		private String ibge;
 		
 		
+
+		public Double getSalario() {
+			return salario;
+		}
+
+		public void setSalario(Double salario) {
+			this.salario = salario;
+		}
 
 		public String getCep() {
 			return cep;
