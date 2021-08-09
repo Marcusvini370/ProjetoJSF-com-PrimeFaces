@@ -14,7 +14,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.xml.bind.DatatypeConverter;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
@@ -192,5 +194,13 @@ public class UsuarioPessoaManagedBean {
 		list = daoGeneric.pesquisar(campoPesquisa);
 		montarGráfico();
 	}
+	
+	public void upload(FileUploadEvent image) {
+		
+				// base 64 pra jogar na tela e salvar no banco tb
+				String imagem = "data:imagem/png;base64," + DatatypeConverter.printBase64Binary(image.getFile().getContents());
+				usuarioPessoa.setImagem(imagem); //seta a imagem
+	}
+	
 	
 }

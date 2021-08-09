@@ -44,11 +44,6 @@
 				value="#{usuarioPessoaManagedBean.usuarioPessoa.sobrenome}"
 				required="true" requiredMessage="Informe o sobrenome!" />
 			
-			<p:outputLabel>Login:</p:outputLabel>
-			<p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}" />
-			
-			<p:outputLabel>Senha:</p:outputLabel>
-			<p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.senha}" />
 	
 			<p:outputLabel>Idade:</p:outputLabel>
 			<p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.idade}" />
@@ -61,6 +56,13 @@
 				<f:selectItem itemValue="MASCULINO" itemLabel="Mausculino"/>
 				<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
 			</p:selectOneMenu>
+			
+			
+			<p:outputLabel>Login:</p:outputLabel>
+			<p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}" />
+			
+			<p:outputLabel>Senha:</p:outputLabel>
+			<p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.senha}" />
 			
 			<p:outputLabel>Cep:</p:outputLabel>
 	<p:inputText  value="#{usuarioPessoaManagedBean.usuarioPessoa.cep}" id="cepUser">
@@ -95,6 +97,14 @@
 			<p:outputLabel>Ibge:</p:outputLabel>
 			<p:inputText  value="#{usuarioPessoaManagedBean.usuarioPessoa.ibge}" id="ibge"/>
 			
+			
+			<p:outputLabel>Foto</p:outputLabel>
+			<p:fileUpload mode="advanced" label="Adicionar" auto="true"
+				update="imagem" fileUploadListener="#{usuarioPessoaManagedBean.upload}" />
+				
+			<p:outputLabel>Imagem</p:outputLabel>
+			<h:graphicImage id="imagem" value="#{usuarioPessoaManagedBean.usuarioPessoa.imagem}" 
+			width="120" height="120" />
 		</h:panelGrid>
 
 	<div style="margin-top:30px; margin-left:44%; ">

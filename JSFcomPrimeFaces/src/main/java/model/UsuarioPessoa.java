@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,9 @@ public class UsuarioPessoa {
 	private int idade;
 	private Double salario;
 	
+	@Column(columnDefinition = "text")
+	private String imagem;
+	
 	
 	// mapeado com usuarioPessoa do telefoneUser que está fazendo o ManyToOne
 	// ele que vai trazer os telefones dos usuarios
@@ -62,7 +66,13 @@ public class UsuarioPessoa {
 		private String uf;
 		private String ibge;
 		
-		
+		public String getImagem() {
+			return imagem;
+		}
+
+		public void setImagem(String imagem) {
+			this.imagem = imagem;
+		}
 
 		public Double getSalario() {
 			return salario;
