@@ -144,7 +144,7 @@
 					<p:graphicImage value="resources/img/deletar.png" title="Editar" />			
 					<f:setPropertyActionListener value="#{user}"
 						target="#{usuarioPessoaManagedBean.usuarioPessoa}" />
-						<f:ajax execute="botaoremover" render="@form :formulario"/>
+						<f:ajax execute="botaoremover" render="@form :formulario :graficosalario"/>
 				</h:commandLink>
 				</center>
 			</p:column>
@@ -210,7 +210,7 @@
 		</p:dialog>
 	</h:form>
 	
-			<p:chart type="bar" model="#{usuarioPessoaManagedBean.barCharModel}" style="margin-top:70px;"/>
+			<p:chart type="bar" model="#{usuarioPessoaManagedBean.barCharModel}" style="margin-top:70px;" id="graficosalario"/>
 
 </h:body>
 </html>

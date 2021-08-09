@@ -46,7 +46,7 @@ public class UsuarioPessoaManagedBean {
 		
 		for (UsuarioPessoa usuarioPessoa : list) { /* Add salario para o grupo */
 			userSalario.set(usuarioPessoa.getNome(), usuarioPessoa.getSalario()); /* add salários */
-		
+			
 		}
 		barCharModel.addSeries(userSalario); /* Adiciona o grupo */
 		barCharModel.setTitle("Gráfico de Salários");
@@ -68,10 +68,10 @@ public class UsuarioPessoaManagedBean {
 	}
 	
 	public String salvar() {
-		
-		
 		daoGeneric.salvar(usuarioPessoa);
 		list.add(usuarioPessoa);
+		usuarioPessoa = new UsuarioPessoa();
+		init();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
 				(FacesMessage.SEVERITY_INFO,  "Informação: ", "Salvo com Sucesso!"));
 		
@@ -95,6 +95,7 @@ public class UsuarioPessoaManagedBean {
 		daoGeneric.removerUsuario(usuarioPessoa);
 		list.remove(usuarioPessoa);
 		usuarioPessoa = new UsuarioPessoa();
+		init();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
 				(FacesMessage.SEVERITY_INFO,  "Informação: ", "Removido com Sucesso!"));
 		}catch(Exception e) {
