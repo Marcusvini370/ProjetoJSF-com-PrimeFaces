@@ -103,6 +103,18 @@
 		</div>
 		</h:form>
 		
+		<h:form>
+		
+			<p:panel header="Consultar usuário">
+			
+				<h:panelGrid columns="3">
+					<h:outputLabel value="Nome:"/>
+					<p:inputText value="#{usuarioPessoaManagedBean.campoPesquisa}"/>
+					<p:commandButton value="Buscar" actionListener="#{usuarioPessoaManagedBean.pesquisar}" update="formtable :graficosalario"/>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		
 		<h:form id="formtable">
 		<p:dataTable value="#{usuarioPessoaManagedBean.list}" var="user"
 			cellpadding="15" border="1" style="margin-top:70px;"> 

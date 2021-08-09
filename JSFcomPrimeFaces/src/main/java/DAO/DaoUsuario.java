@@ -1,5 +1,9 @@
 package DAO;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import model.UsuarioPessoa;
 
 public class DaoUsuario<E> extends DaoGenerico<UsuarioPessoa> {
@@ -14,6 +18,14 @@ public class DaoUsuario<E> extends DaoGenerico<UsuarioPessoa> {
 		
 		super.deletarPorId(pessoa);
 		}
+
+	public List<UsuarioPessoa> pesquisar(String campoPesquisa) {
+		
+		Query query = super.getEntityManager().createQuery("from UsuarioPessoa where nome like '%"+campoPesquisa+"%'");
+		
+		
+		return query.getResultList();
+	}
 	
 	
 }
