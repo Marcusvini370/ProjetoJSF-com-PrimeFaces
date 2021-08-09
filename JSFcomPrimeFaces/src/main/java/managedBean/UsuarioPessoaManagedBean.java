@@ -1,12 +1,14 @@
 package managedBean;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.primefaces.event.FileUploadEvent;
@@ -201,6 +204,44 @@ public class UsuarioPessoaManagedBean {
 				String imagem = "data:imagem/png;base64," + DatatypeConverter.printBase64Binary(image.getFile().getContents());
 				usuarioPessoa.setImagem(imagem); //seta a imagem
 	}
+	
+	public void download() throws IOException {
+		
+	try {
+		
+		//vai ter todos atributos que foram enviados da nossa requisição
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		
+		//vai ter o id da pessoa passado pelo value ná página xhtml pq pega qlq dado da requisição que ja foi passado
+		String fileDowloadID = params.get("fileDowloadID");
+		
+		//nossa id ta em string ai faz um parse long e a classe da consulta do banco de dados da pessoa
+		UsuarioPessoa pessoa = daoGeneric.pesquisar(Long.parseLong(fileDowloadID), UsuarioPessoa.class);
+		
+		//imagem tá dentro do objeto pessoa que acabou de pesquisar
+		byte[] imagem = new org.apache.tomcat.util.codec.binary.Base64().decodeBase64(pessoa.getImagem().split("\\,")[1]);
+		
+		//como tá generico tem que fazer a conversão  (HttpServletResponse)
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		
+		//attchament baixa direto n vai pra outra tela e o nome que quer
+		response.addHeader("Content-Disposition", "attachment; filename=dowload.png");
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(imagem.length);
+		response.getOutputStream().write(imagem);
+		response.getOutputStream().flush(); //manda tudo pra resposta
+		FacesContext.getCurrentInstance().responseComplete(); //resposta completa
+		
+	
+	
+	}catch(Exception e) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Resultado", "Usuário sem Imagem"));
+	}
+	
+	
+}
 	
 	
 }
