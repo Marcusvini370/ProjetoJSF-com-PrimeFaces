@@ -11,10 +11,16 @@ public class DaoUsuario<E> extends DaoGenerico<UsuarioPessoa> {
 	
 
 	public void removerUsuario(UsuarioPessoa pessoa) throws Exception {
-		getEntityManager().getTransaction().begin();
-		String sqlDeleteFone  = "delete from telefoneUser where usuariopessoa_id = " + pessoa.getId();	
-		getEntityManager().createNativeQuery(sqlDeleteFone).executeUpdate();
-		getEntityManager().getTransaction().commit();
+getEntityManager().getTransaction().begin();
+		
+		String sqlDeleteFone = "delete from telefoneuser where usuariopessoa_id = " + pessoa.getId();
+        //método do DaoGeneric da conexão com o banco de dados  
+		getEntityManager().createNativeQuery(sqlDeleteFone).executeUpdate();//faz atualização ou delete
+    	
+    	String sqlDeleteEmail = "delete from emailuser where usuariopessoa_id = " + pessoa.getId();
+    	getEntityManager().createNativeQuery(sqlDeleteEmail).executeUpdate();
+    	
+    	getEntityManager().getTransaction().commit();
 		
 		super.deletarPorId(pessoa);
 		}

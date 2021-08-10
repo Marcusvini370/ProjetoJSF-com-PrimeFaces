@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 
 import DAO.DaoEmail;
 import DAO.DaoUsuario;
+import datatablelazy.LazyDataTableModelUserPessoa;
 import model.EmailUser;
 import model.UsuarioPessoa;
 
@@ -35,7 +36,7 @@ import model.UsuarioPessoa;
 public class UsuarioPessoaManagedBean {
 	
 	private UsuarioPessoa usuarioPessoa = new UsuarioPessoa();
-	private List<UsuarioPessoa> list = new ArrayList<UsuarioPessoa>();
+	private LazyDataTableModelUserPessoa<UsuarioPessoa> list = new LazyDataTableModelUserPessoa<UsuarioPessoa>();
 	private DaoUsuario<UsuarioPessoa> daoGeneric = new DaoUsuario<UsuarioPessoa>();
 	private BarChartModel barCharModel;
 	private EmailUser emailuser = new EmailUser();
@@ -45,7 +46,7 @@ public class UsuarioPessoaManagedBean {
 	@PostConstruct
 	public void init() {
 	
-		list = daoGeneric.listar(UsuarioPessoa.class);
+		list.load(0, 5, null, null, null);
 		
 		montarGráfico();
 	
@@ -58,7 +59,7 @@ public class UsuarioPessoaManagedBean {
 		ChartSeries  userSalario = new ChartSeries();/* Grupo de Funcionários */
 		userSalario.setLabel("Users"); 
 		
-		for (UsuarioPessoa usuarioPessoa : list) { /* Add salario para o grupo */
+		for (UsuarioPessoa usuarioPessoa : list.list) { /* Add salario para o grupo */
 			userSalario.set(usuarioPessoa.getNome(), usuarioPessoa.getSalario()); /* add salários */
 			
 		}
@@ -80,7 +81,7 @@ public class UsuarioPessoaManagedBean {
 	
 	public String salvar() {
 		daoGeneric.salvar(usuarioPessoa);
-		list.add(usuarioPessoa);
+		list.list.add(usuarioPessoa);
 		usuarioPessoa = new UsuarioPessoa();
 		init();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
@@ -97,14 +98,15 @@ public class UsuarioPessoaManagedBean {
 		return"";
 	}
 	
-	public List<UsuarioPessoa> getList() {
+	public LazyDataTableModelUserPessoa<UsuarioPessoa> getList() {
+		montarGráfico();
 		return list;
 	}
 	
 	public String remover() {
 		try {
 		daoGeneric.removerUsuario(usuarioPessoa);
-		list.remove(usuarioPessoa);
+		list.list.remove(usuarioPessoa);
 		usuarioPessoa = new UsuarioPessoa();
 		init();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
@@ -113,7 +115,7 @@ public class UsuarioPessoaManagedBean {
 			
 			if(e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,"Informação: ", "Existem telefones parao usuário!"));
+						new FacesMessage(FacesMessage.SEVERITY_INFO,"Informação: ", "Existem telefones para o usuário!"));
 		}else
 			e.printStackTrace();
 		}
@@ -194,7 +196,7 @@ public class UsuarioPessoaManagedBean {
 	}
 	
 	public void pesquisar() {
-		list = daoGeneric.pesquisar(campoPesquisa);
+		list.pesquisar(campoPesquisa);
 		montarGráfico();
 	}
 	

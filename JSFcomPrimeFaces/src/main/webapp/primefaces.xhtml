@@ -57,13 +57,6 @@
 				<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
 			</p:selectOneMenu>
 			
-			
-			<p:outputLabel>Login:</p:outputLabel>
-			<p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}" />
-			
-			<p:outputLabel>Senha:</p:outputLabel>
-			<p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.senha}" />
-			
 			<p:outputLabel>Cep:</p:outputLabel>
 	<p:inputText  value="#{usuarioPessoaManagedBean.usuarioPessoa.cep}" id="cepUser">
 	<f:ajax event="blur" execute="@this" 
@@ -105,6 +98,13 @@
 			<p:outputLabel>Imagem</p:outputLabel>
 			<h:graphicImage id="imagem" value="#{usuarioPessoaManagedBean.usuarioPessoa.imagem}" 
 			width="120" height="120" />
+			
+				<p:outputLabel>Login:</p:outputLabel>
+			<p:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}" />
+			
+			<p:outputLabel>Senha:</p:outputLabel>
+			<p:password value="#{usuarioPessoaManagedBean.usuarioPessoa.senha}" />
+			
 		</h:panelGrid>
 
 	<div style="margin-top:30px; margin-left:44%; ">
@@ -127,7 +127,8 @@
 		
 		<h:form id="formtable">
 		<p:dataTable value="#{usuarioPessoaManagedBean.list}" var="user"
-			cellpadding="15" border="1" style="margin-top:70px;"> 
+			cellpadding="15" border="1" style="margin-top:70px;" rows="5" 
+			paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink}"> 
 			<f:facet name="header">Lista de Usuários</f:facet>
 
 			<p:column headerText="ID"  width="20">

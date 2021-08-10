@@ -26,7 +26,7 @@
 		
 		<h:messages showDetail="true" showSummary="false" id="msg"/>
 	
-	<h:panelGrid columns="2">
+	<h:panelGrid columns="2" style="display:flex; justify-content:center; margin-top:50px;">
 	<h:outputLabel>Id:</h:outputLabel>
 	<h:inputText readonly="true" value="#{usuarioPessoaManagedBean.usuarioPessoa.id}"/> 
 	
@@ -73,19 +73,27 @@
 	
 	<h:outputLabel>Ibge:</h:outputLabel>
 	<h:inputText  value="#{usuarioPessoaManagedBean.usuarioPessoa.ibge}" id="ibge"/>
+
+	<h:outputLabel>Login:</h:outputLabel>
+	<h:inputText value="#{usuarioPessoaManagedBean.usuarioPessoa.login}" />
+
+	<h:outputLabel>Senha:</h:outputLabel>
+	<h:inputSecret value="#{usuarioPessoaManagedBean.usuarioPessoa.senha}" />
+
+		</h:panelGrid>
 	
-	</h:panelGrid>
-	
-	<br/>
-	<br/>
+		<div style="margin: 50px 0px 50px 47%;">
 		<h:commandButton value="Salvar" action="#{usuarioPessoaManagedBean.salvar}"/>
 		<h:commandButton value="Novo" action="#{usuarioPessoaManagedBean.novo}"/>
-		<br/>
-		<br/>
+		</div>
+
 		</h:form>
+	
 		
-		<h:form id="formTable">
-		<h:dataTable value="#{usuarioPessoaManagedBean.list}" var="user" cellpadding="15" border="1">
+		
+		<h:form id="formTable" style="display:flex; justify-content:center;" >
+		<h:dataTable value="#{usuarioPessoaManagedBean.list.list}" var="user" cellpadding="15" border="1"
+		rows="5" paginator="true" lazy="true" paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink}"> >
 		<f:facet name="header">Lista de Usuários</f:facet>
 		
 			<h:column>
